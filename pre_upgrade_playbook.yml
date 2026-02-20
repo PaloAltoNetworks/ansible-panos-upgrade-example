@@ -1,0 +1,15 @@
+---
+- hosts: all
+  connection: local
+  gather_facts: true
+  name: Example Policy Lookup Playbook
+
+  vars:
+    provider:
+      ip_address: "{{ panorama_ip_address }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      serial_number: "{{ serialno }}"
+
+  roles:
+    - preupgrade
