@@ -12,4 +12,4 @@
       serial_number: "{{ serialno }}"
 
   roles:
-    - preupgrade
+    - run_readiness_checks

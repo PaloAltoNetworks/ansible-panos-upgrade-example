@@ -1,0 +1,27 @@
+---
+- name: Debug - print what we're testing
+  ansible.builtin.debug:
+    msg: |
+      Comparing snapshots for {{ provider.serial_number }}
+
+- name: Set filepaths
+  set_fact:
+    left_full_path: "{{ [snapshot_directory, left_snapshot] | path_join }}.json"
+    right_full_path: "{{ [snapshot_directory, right_snapshot] | path_join }}.json"
+
+- name: Set Snapshot Data
+  set_fact:
+    left_snapshot: '{{ lookup("file", left_full_path) | from_json }}'
+    right_snapshot: '{{ lookup("file", right_full_path) | from_json }}'
+
+- name: Compare licenses in two snapshots, skip device's serial number to avoid false-positives
+  paloaltonetworks.panos.panos_snapshot_report:
+    left_snapshot: '{{ left_snapshot.response }}'
+    right_snapshot: '{{ right_snapshot.response }}'
+    reports:
+      - 'are_routes'
+  register: report
+
+- name: Print the report to stdout
+  ansible.builtin.debug:
+    var: report.response

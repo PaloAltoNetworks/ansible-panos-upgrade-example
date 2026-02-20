@@ -1,0 +1,30 @@
+---
+argument_specs:
+  main:
+    short_description: Runs pre-upgrade test suite and takes an operational snapshot.
+    description:
+      - >-
+        Runs the pre-upgrade ('readiness') tests and takes a snapshot of the operational state of the target 
+        firewall.
+    options:
+      panorama_ip_address:
+        type: "str"
+        required: true
+        description: "The PANORAMA IP address to calls through"
+      serialno:
+        type: "str"
+        required: true
+        description: "The serial number of the firewall to run checks on"
+      username:
+        type: "str"
+        required: true
+        description: "Firewall login username"
+      password:
+        type: "str"
+        required: true
+        description: "Firewall login password"
+      snapshot_directory:
+        type: "str"
+        default: "./snapshots"
+        required: false
+        description: "Path to directory in which to store state snapshots"

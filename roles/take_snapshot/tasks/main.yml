@@ -1,0 +1,24 @@
+---
+- name: Debug - print what we're testing
+  ansible.builtin.debug:
+    msg: |
+      Taking snapshot of {{ provider.serial_number }} via {{ provider.ip_address }} and saving to {{ snapshot_output_file }}
+    
+- name: Creates directory with specific permissions
+  ansible.builtin.file:
+    path: "{{ snapshot_directory }}"
+    state: directory
+    mode: '0755'
+
+- name: Run snapshot of all areas except for session statistics
+  paloaltonetworks.panos.panos_state_snapshot:
+    provider: '{{ provider }}'
+    state_areas:
+      - 'all'
+  register: snapshot
+
+- name: Write variable content to a file
+  ansible.builtin.copy:
+    content: "{{ snapshot }}"
+    dest: "{{ snapshot_output_file }}"
+    mode: '0644' # Quote octal numbers for consistent results

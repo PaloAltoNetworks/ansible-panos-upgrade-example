@@ -1,0 +1,17 @@
+---
+- hosts: all
+  connection: local
+  gather_facts: true
+  name: Example snapshot comparison playbook
+
+  vars:
+    provider:
+      ip_address: "{{ panorama_ip_address }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      serial_number: "{{ serialno }}"
+    version: 11.2.7-h4
+
+  roles:
+    - role: upgrade
+      name: Run an upgrade
