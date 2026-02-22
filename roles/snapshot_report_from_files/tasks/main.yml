@@ -14,14 +14,25 @@
     left_snapshot: '{{ lookup("file", left_full_path) | from_json }}'
     right_snapshot: '{{ lookup("file", right_full_path) | from_json }}'
 
-- name: Compare licenses in two snapshots, skip device's serial number to avoid false-positives
+- name: Compare Routes, ARP Table and Network interfaces - ignoring route uptime changes
   paloaltonetworks.panos.panos_snapshot_report:
     left_snapshot: '{{ left_snapshot.response }}'
     right_snapshot: '{{ right_snapshot.response }}'
     reports:
-      - 'are_routes'
+      - are_routes:
+          properties:
+            - '!uptime'
+      - 'arp_table'
+      - 'nics'
   register: report
 
-- name: Print the report to stdout
-  ansible.builtin.debug:
-    var: report.response
+- name: Write the report content to a file
+  ansible.builtin.copy:
+    content: "{{ report }}"
+    dest: "{{ report_output_file }}"
+    mode: '0644' # Quote octal numbers for consistent results
+
+- name: Save the output as stats
+  ansible.builtin.set_stats:
+    data:
+      snapshot_result_data: "{{ report.response }}"

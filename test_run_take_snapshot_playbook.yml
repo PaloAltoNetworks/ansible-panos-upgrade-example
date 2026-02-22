@@ -24,7 +24,8 @@
         snapshot_filename: "post_upgrade_snapshot_{{ serialno }}"
 
     - role: snapshot_report_from_files
-      name: Compare the two snapshot reports
+      name: Compare the two snapshot reports and write it to a file
       vars:
         left_snapshot: "pre_upgrade_snapshot_{{ serialno }}"
         right_snapshot: "post_upgrade_snapshot_{{ serialno }}"
+        report_output_file: "comparison_report.json"
