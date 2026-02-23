@@ -15,3 +15,7 @@ argument_specs:
         type: "str"
         required: true
         description: "The second snapshot to compare, usually this snapshot is the one taken after any upgrades or changes"
+      report_output_file:
+        type: "str"
+        required: false
+        description: "The name of the report to save. Defaults to report.json"

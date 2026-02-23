@@ -8,6 +8,7 @@
   set_fact:
     left_full_path: "{{ [snapshot_directory, left_snapshot] | path_join }}.json"
     right_full_path: "{{ [snapshot_directory, right_snapshot] | path_join }}.json"
+    report_output_file: "{{ report_output_file | default('report.json') }}"
 
 - name: Set Snapshot Data
   set_fact:
