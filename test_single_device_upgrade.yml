@@ -1,0 +1,53 @@
+---
+- hosts: all
+  connection: local
+  gather_facts: true
+  name: Example snapshot comparison playbook
+
+  vars:
+    provider:
+      ip_address: "{{ panorama_ip_address }}"
+      username: "{{ username | default(lookup('env', 'ANSIBLE_NET_USERNAME')) }}"
+      password: "{{ password | default(lookup('env', 'ANSIBLE_NET_PASSWORD')) }}"
+      serial_number: "{{ serialno }}"
+    snapshot_directory: "./snapshots"
+
+  roles:
+
+    ##################
+    # Check Device   #
+    ##################
+
+    - role: run_readiness_checks
+      name: READINESS - Check the device can be upgraded
+
+    ##################
+    # TAKE SNAPSHOTS #
+    ##################
+
+    - role: take_snapshot
+      name: SNAPSHOTS - Take the pre-upgrade snapshot
+      vars:
+        snapshot_filename: "pre_upgrade_snapshot_{{ serialno }}"
+
+    ############
+    # UPGRADE  #
+    ############
+
+    - role: upgrade
+      name: UPGRADES - Upgrade the Device
+
+    ############################
+    # Check State post-upgrade #
+    ############################
+
+    - role: take_snapshot
+      name: SNAPSHOTS - Take the post-upgrade snapshot
+      vars:
+        snapshot_filename: "post_upgrade_snapshot_{{ serialno }}"
+
+    - role: snapshot_report_from_files
+      name: REPORTS - Compare the two snapshot reports from the main
+      vars:
+        left_snapshot: "pre_upgrade_snapshot_{{ serialno }}"
+        right_snapshot: "post_upgrade_snapshot_{{ serialno }}"
