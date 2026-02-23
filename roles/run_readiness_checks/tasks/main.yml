@@ -38,4 +38,6 @@
 - name: FAIL - Readiness checks failed
   ansible.builtin.fail:
     msg: "Readiness checks failed and exit_on_fail is set to true. Aborting."
-  when: panos_upgrade_assurance_failed_readiness_checks | length > 0
+  when:
+    - panos_upgrade_assurance_failed_readiness_checks | length > 0
+    - exit_on_fail
