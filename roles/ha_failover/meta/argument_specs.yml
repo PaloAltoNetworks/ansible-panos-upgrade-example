@@ -17,14 +17,13 @@ argument_specs:
         description: "The serial number of the firewall to run checks on"
       username:
         type: "str"
-        required: false
-        description: "Firewall login username - defaults to envvar ANSIBLE_NET_USERNAME"
+        required: true
+        description: "Firewall login username"
       password:
         type: "str"
-        required: false
-        description: "Firewall login password - defaults to ennvar ANSIBLE_NET_PASSWORD"
-      snapshot_directory:
+        required: true
+        description: "Firewall login password"
+      state:
         type: "str"
-        default: "./snapshots"
-        required: false
-        description: "Path to directory in which to store state snapshots"
+        required: true
+        description: "State to set HA to "

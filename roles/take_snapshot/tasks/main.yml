@@ -14,7 +14,10 @@
   paloaltonetworks.panos.panos_state_snapshot:
     provider: '{{ provider }}'
     state_areas:
-      - 'all'
+      - 'arp_table'
+      - 'are_routes'
+      - 'session_stats'
+      - 'nics'
   register: snapshot
 
 - name: Write variable content to a file
