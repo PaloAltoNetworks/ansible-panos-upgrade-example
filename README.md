@@ -10,7 +10,8 @@ For more information, contact Palo Alto Networks Professional Services.
 
 ## Configure the PAN-OS Ansible EE image as an execution environment
 
-![img.png](docs/create_execution_env.png)
+**Image**: ghcr.io/paloaltonetworks/ansible-panos-upgrade-example:latest
+![img.png](docs/ee.png)
 
 ### Setup a Project
 ![img.png](docs/create_project.png)

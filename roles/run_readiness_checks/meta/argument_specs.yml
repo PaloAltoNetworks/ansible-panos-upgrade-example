@@ -23,3 +23,8 @@ argument_specs:
         type: "str"
         required: true
         description: "Firewall login password"
+      exit_on_fail:
+        type: "bool"
+        required: false
+        default: false
+        description: "Playbook fails if any readiness check fails."
