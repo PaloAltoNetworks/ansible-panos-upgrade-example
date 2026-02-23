@@ -17,12 +17,12 @@ argument_specs:
         description: "The serial number of the firewall to run checks on"
       username:
         type: "str"
-        required: true
-        description: "Firewall login username"
+        required: false
+        description: "Firewall login username - defaults to envvar ANSIBLE_NET_USERNAME"
       password:
         type: "str"
-        required: true
-        description: "Firewall login password"
+        required: false
+        description: "Firewall login password - defaults to ennvar ANSIBLE_NET_PASSWORD"
       version:
         type: "str"
         required: true
