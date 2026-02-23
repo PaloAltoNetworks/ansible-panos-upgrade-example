@@ -22,7 +22,7 @@
 - name: Install target version - !! DEVICE WILL RESTART !!
   paloaltonetworks.panos.panos_software:
     provider: '{{ provider }}'
-    version: '{{ base_image }}'
+    version: '{{ version }}'
     install: true
     restart: true
 
